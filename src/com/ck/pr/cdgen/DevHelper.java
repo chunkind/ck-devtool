@@ -31,11 +31,16 @@ public class DevHelper {
 		}
 	}
 	
-	public void printAllSql(String tableName){
+	public String printAllSql(String tableName){
 		String alias = "A";
 		String className = DevHelperUtil.toPascalCase(tableName) + "Dto";
 		
 		List<TargetTableInfo> list = odb.getTableInfo(tableName);
+		
+		if(null == list || list.size() == 0){
+			return "테이블이 존재하지 않거나 DB 정보를 확인해 주세요.";
+		}
+		
 		String createSql = odb.createSqlCreate(list);
 		String insertSql = odb.createSqlInsert(list);
 		String selectSql = odb.createSqlSelect(list, alias);
@@ -43,19 +48,22 @@ public class DevHelper {
 		String deleteSql = odb.createSqlDelete(list);
 		String vo = odb.createJavaFiled(list, className);
 		
-		System.out.println("==createSqlCreate================================================================");
-		System.out.println(createSql);
-		System.out.println("==createSqlInsert================================================================");
-		System.out.println(insertSql);
-		System.out.println("==createSqlSelect================================================================");
-		System.out.println(selectSql);
-		System.out.println("==createSqlUpdate================================================================");
-		System.out.println(updateSql);
-		System.out.println("==createSqlDelete================================================================");
-		System.out.println(deleteSql);
-		System.out.println("==createJavaFiled================================================================");
-		System.out.println(vo);
-		System.out.println("=============================================================================");
+		String result = "";
+		result += "==createSqlCreate============================================================\n";
+		result += createSql.replaceAll("\t", "");
+		result += "==createSqlInsert============================================================\n";
+		result += insertSql.replaceAll("\t", "");
+		result += "==createSqlSelect============================================================\n";
+		result += selectSql.replaceAll("\t", "");
+		result += "==createSqlUpdate============================================================\n";
+		result += updateSql.replaceAll("\t", "");
+		result += "==createSqlDelete============================================================\n";
+		result += deleteSql.replaceAll("\t", "");
+		result += "==createJavaFiled============================================================\n";
+		result += vo.replaceAll("\t", "");
+		result += "=========================================================================\n";
+		System.out.println(result);
+		return result;
 	}
 
 	public void createAllFile(FileMetaInfo info) {

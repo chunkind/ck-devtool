@@ -38,22 +38,40 @@ public abstract class Connector {
 			
 			ResultSet rs = ps.executeQuery();
 			TargetTableInfo obj = null;
+			
+			String tableOwner = "";
+			String tableNm = "";
+			String columnType = "";
+			String columnName = "";
+			String columnComments = "";
 			while(rs.next()){
+				tableOwner = rs.getString("tableOwner");
+				tableNm = rs.getString("tableName");
+				columnType = rs.getString("columnType");
+				columnName = rs.getString("columnName");
+				columnComments = rs.getString("columnComments");
+				
+				if(null != columnComments && !"".equals(columnComments)){
+					columnComments = columnComments.replaceAll("\n", "").trim();
+				}
+				
 				obj = new TargetTableInfo();
-				obj.setTableOwner(rs.getString("tableOwner"));
-				obj.setTableName(rs.getString("tableName"));
-				obj.setColumnType(rs.getString("columnType"));
-				obj.setColumnName(rs.getString("columnName"));
-				obj.setColumnComments(rs.getString("columnComments").replaceAll("\n", "").trim());
+				obj.setTableOwner(tableOwner);
+				obj.setTableName(tableNm);
+				obj.setColumnType(columnType);
+				obj.setColumnName(columnName);
+				obj.setColumnComments(columnComments);
 				tableInfo.add(obj);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
 		} finally {
-			if(tableInfo.size() == 0)
-				throw new RuntimeException("조회할 데이터가 없습니다.");
+//			if(tableInfo.size() == 0)
+//				throw new RuntimeException("조회할 데이터가 없습니다.");
 		}
 		return tableInfo;
 	}

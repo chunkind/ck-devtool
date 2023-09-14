@@ -40,6 +40,9 @@ public class TargetTableInfo{
 	}
 	
 	public String getColumnComments() {
+		if(null == columnComments || "".equals(columnComments)){
+			return "-";
+		}
 		return columnComments;
 	}
 	

@@ -1,43 +1,253 @@
 package com.ck.pr.gui;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.ck.pr.cdgen.DevHelper;
+import com.ck.pr.cdgen.model.FileMetaInfo;
 
 
 public class DevToolGUI extends JFrame{
-    public DevToolGUI(){
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("개발 도구");
-        setLayout(new FlowLayout());
-        
-        JPanel mainPanel = new JPanel();
-        JPanel topPanel = new JPanel();
-        JPanel midlePanel = new JPanel();
-        JPanel bottomPanel = new JPanel();
-        
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-        
-        topPanel.setBackground(Color.blue);
-        midlePanel.setBackground(Color.cyan);
-        bottomPanel.setBackground(Color.green);
-        
-        mainPanel.add(topPanel);
-        mainPanel.add(midlePanel);
-        mainPanel.add(bottomPanel);
-        
-        setSize(1400, 800);
-        setVisible(true);
-    }
-    
-    public static void main(String[] args) {
-        new DevToolGUI();
-    }
+	private static final long serialVersionUID = 1L;
+	private static final int textFileSize = 45;
+	
+	public JPanel mainPanel = new JPanel();
+	public JPanel topPanel = new JPanel();
+	public JPanel midPanel = new JPanel();
+	public JPanel btmPanel = new JPanel();
+	
+	public JPanel topLeftPanel = new JPanel();
+	public JPanel topCntrPanel = new JPanel();
+	public JPanel topRghtPanel = new JPanel();
+	
+	public JPanel midLeftPanel = new JPanel();
+	public JPanel midCntrPanel = new JPanel();
+	public JPanel midRghtPanel = new JPanel();
+	
+	public JPanel btmLeftPanel = new JPanel();
+	public JPanel btmCntrPanel = new JPanel();
+	public JPanel btmRghtPanel = new JPanel();
+	
+	public JPanel workspacePathPl = new JPanel();
+	public JPanel dbDriverPl = new JPanel();
+	public JPanel dbUrlPl = new JPanel();
+	public JPanel dbUserPl = new JPanel();
+	public JPanel dbPassPl = new JPanel();
+	public JPanel dbTypePl = new JPanel();
+	public JPanel dbTableNamePl = new JPanel();
+	public JPanel nameSpacePl = new JPanel();
+	public JPanel controllerPathPl = new JPanel();
+	public JPanel servicePathPl = new JPanel();
+	public JPanel serviceImplPathPl = new JPanel();
+	public JPanel daoPathPl = new JPanel();
+	public JPanel daoImplPathPl = new JPanel();
+	public JPanel modelPathPl = new JPanel();
+	public JPanel searchModelPathPl = new JPanel();
+	public JPanel ormPathPl = new JPanel();
+	
+	public JLabel workspacePathLb = new JLabel("워크스페이스 경로 :");
+	public JLabel dbDriverLb = new JLabel("DB Drvier :");
+	public JLabel dbUrlLb = new JLabel("DB URL :");
+	public JLabel dbUserLb = new JLabel("DB User :");
+	public JLabel dbPassLb = new JLabel("DB Pass :");
+	public JLabel dbTypeLb = new JLabel("DBMS 명 :");
+	public JLabel dbTableNameLb = new JLabel("디비 테이블 이름 :");
+	public JLabel nameSpaceLb = new JLabel("네임스페이스 :");
+	public JLabel controllerPathLb = new JLabel("Controller 명 :");
+	public JLabel servicePathLb = new JLabel("Service 명 :");
+	public JLabel serviceImplPathLb = new JLabel("ServiceImpl 명 :");
+	public JLabel daoPathLb = new JLabel("Dao 명 :");
+	public JLabel daoImplPathLb = new JLabel("DaoImpl 명 :");
+	public JLabel modelPathLb = new JLabel("모델 명 :");
+	public JLabel searchModelPathLb = new JLabel("파라미터 모델 명 :");
+	public JLabel ormPathLb = new JLabel("mybatis xml 명 :");
+	
+	public JTextField workspacePathTf = new JTextField("C:/work/workspace", textFileSize);
+	public JTextField dbDriverTf = new JTextField("net.sf.log4jdbc.DriverSpy", textFileSize);
+	public JTextField dbUrlTf = new JTextField("jdbc:log4jdbc:oracle:thin:@10.154.3.160:1526:SKRECP1", textFileSize);
+	public JTextField dbUserTf = new JTextField("SHOPPINGUSER", textFileSize);
+	public JTextField dbPassTf = new JTextField("goddnsehd1109", textFileSize);
+	public JTextField dbTypeTf = new JTextField("oracle", textFileSize);
+	public JTextField dbTableNameTf = new JTextField("HI_RM252M", textFileSize);
+	public JTextField nameSpaceTf = new JTextField("testMapper", textFileSize);
+	public JTextField controllerPathTf = new JTextField("/05_BO/src/main/java/ehimart/webapp/bo/test/controller/TestController.java", textFileSize);
+	public JTextField servicePathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/service/TestService.java", textFileSize);
+	public JTextField serviceImplPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/service/TestServiceImpl.java", textFileSize);
+	public JTextField daoPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/biz/TestBiz.java", textFileSize);
+	public JTextField daoImplPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/biz/TestBizImpl.java", textFileSize);
+	public JTextField modelPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/model/TestModel.java", textFileSize);
+	public JTextField searchModelPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/model/SearchTestModel.java", textFileSize);
+	public JTextField ormPathTf = new JTextField("/02_Application/src/main/resources/ehimart/app/domain/bo/test/mapper/testMapper.xml", textFileSize);
+	
+	public JTextArea printSource = new JTextArea("디비정보만 입력해도 프린트 할 수 있습니다.", 43, 50);
+
+	public DevToolGUI(){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("개발 도구");
+//		setLayout(new FlowLayout(FlowLayout.CENTER, 20, 5));
+		
+		//스크롤 
+		JScrollPane scrollPane = new JScrollPane(printSource);
+		
+		//패널 배경색 설정(테스트용)
+//		topLeftPanel.setBackground(Color.cyan);
+//		topCntrPanel.setBackground(Color.darkGray);
+//		topRghtPanel.setBackground(Color.lightGray);
+//		midLeftPanel.setBackground(Color.red);
+//		midCntrPanel.setBackground(Color.blue);
+//		midRghtPanel.setBackground(Color.green);
+//		btmLeftPanel.setBackground(Color.yellow);
+//		btmCntrPanel.setBackground(Color.magenta);
+//		btmRghtPanel.setBackground(Color.orange);
+		
+		//레이아웃 설정
+//		topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.Y_AXIS));
+//		topCntrPanel.setLayout(new BoxLayout(topCntrPanel, BoxLayout.Y_AXIS));
+//		topRghtPanel.setLayout(new BoxLayout(topRghtPanel, BoxLayout.Y_AXIS));
+//		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
+		midCntrPanel.setLayout(new BoxLayout(midCntrPanel, BoxLayout.Y_AXIS));
+//		midRghtPanel.setLayout(new BoxLayout(midRghtPanel, BoxLayout.Y_AXIS));
+//		btmLeftPanel.setLayout(new BoxLayout(btmLeftPanel, BoxLayout.Y_AXIS));
+//		btmCntrPanel.setLayout(new BoxLayout(btmCntrPanel, BoxLayout.Y_AXIS));
+//		btmRghtPanel.setLayout(new BoxLayout(btmRghtPanel, BoxLayout.Y_AXIS));
+		
+		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+		midPanel.setLayout(new BoxLayout(midPanel, BoxLayout.X_AXIS));
+		btmPanel.setLayout(new BoxLayout(btmPanel, BoxLayout.X_AXIS));
+		
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		
+		//패널 설정
+		topPanel.add(topLeftPanel);
+		topPanel.add(topCntrPanel);
+		topPanel.add(topRghtPanel);
+		
+		midPanel.add(midLeftPanel);
+		midPanel.add(midCntrPanel);
+		midPanel.add(midRghtPanel);
+		
+		btmPanel.add(btmLeftPanel);
+		btmPanel.add(btmCntrPanel);
+		btmPanel.add(btmRghtPanel);
+		
+		mainPanel.add(topPanel);
+		mainPanel.add(midPanel);
+		mainPanel.add(btmPanel);
+		
+		//컴포넌트 에드
+		workspacePathPl.add(workspacePathLb);workspacePathPl.add(workspacePathTf);
+		dbDriverPl.add(dbDriverLb);dbDriverPl.add(dbDriverTf);
+		dbUrlPl.add(dbUrlLb);dbUrlPl.add(dbUrlTf);
+		dbUserPl.add(dbUserLb);dbUserPl.add(dbUserTf);
+		dbPassPl.add(dbPassLb);dbPassPl.add(dbPassTf);
+		dbTypePl.add(dbTypeLb);dbTypePl.add(dbTypeTf);
+		dbTableNamePl.add(dbTableNameLb);dbTableNamePl.add(dbTableNameTf);
+		nameSpacePl.add(nameSpaceLb);nameSpacePl.add(nameSpaceTf);
+		controllerPathPl.add(controllerPathLb);controllerPathPl.add(controllerPathTf);
+		servicePathPl.add(servicePathLb);servicePathPl.add(servicePathTf);
+		serviceImplPathPl.add(serviceImplPathLb);serviceImplPathPl.add(serviceImplPathTf);
+		daoPathPl.add(daoPathLb);daoPathPl.add(daoPathTf);
+		daoImplPathPl.add(daoImplPathLb);daoImplPathPl.add(daoImplPathTf);
+		modelPathPl.add(modelPathLb);modelPathPl.add(modelPathTf);
+		searchModelPathPl.add(searchModelPathLb);searchModelPathPl.add(searchModelPathTf);
+		ormPathPl.add(ormPathLb);ormPathPl.add(ormPathTf);
+		
+		midCntrPanel.add(new Label("* DB Info"));
+		midCntrPanel.add(dbDriverPl);
+		midCntrPanel.add(dbUrlPl);
+		midCntrPanel.add(dbUserPl);
+		midCntrPanel.add(dbPassPl);
+		midCntrPanel.add(dbTypePl);
+		midCntrPanel.add(dbTableNamePl);
+		
+		midCntrPanel.add(new Label("* File Info"));
+		midCntrPanel.add(workspacePathPl);
+		midCntrPanel.add(controllerPathPl);
+		midCntrPanel.add(servicePathPl);
+		midCntrPanel.add(serviceImplPathPl);
+		midCntrPanel.add(daoPathPl);
+		midCntrPanel.add(daoImplPathPl);
+		midCntrPanel.add(modelPathPl);
+		midCntrPanel.add(searchModelPathPl);
+		midCntrPanel.add(ormPathPl);
+		midCntrPanel.add(nameSpacePl);
+		
+		midRghtPanel.add(scrollPane);
+		
+		//버튼 생성
+		JButton excuteBtn = new JButton("파일 생성");
+		JButton printBtn = new JButton("소스 프린트");
+		btmCntrPanel.add(excuteBtn);
+		btmCntrPanel.add(printBtn);
+		
+		//이벤트 리스터
+		ActionListener makeFileAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int result = JOptionPane.showConfirmDialog(null, "파일생성후 이클립스 프로잭트를 refresh를 해줘야 합니다.\n파일을 정말 생성 하시겠습니까?");
+				if(result == JOptionPane.YES_OPTION){
+					FileMetaInfo info = new FileMetaInfo();
+					info.setDbTableName(dbTableNameTf.getText());
+					info.setNameSpace(nameSpaceTf.getText());
+					info.setControllerPath(controllerPathTf.getText());
+					info.setServicePath(servicePathTf.getText());
+					info.setServiceImplPath(serviceImplPathTf.getText());
+					info.setDaoPath(daoPathTf.getText());
+					info.setDaoImplPath(daoImplPathTf.getText());
+					info.setModelPath(modelPathTf.getText());
+					info.setSearchModelPath(searchModelPathTf.getText());
+					info.setOrmPath(ormPathTf.getText());
+					
+					DevHelper dev = new DevHelper();
+					dev.setConnectInfo(
+						dbDriverTf.getText(),
+						dbUrlTf.getText(),
+						dbUserTf.getText(),
+						dbPassTf.getText(),
+						dbTypeTf.getText()
+					);
+					dev.createAllFile(info);
+				}
+			}
+		};
+		
+		ActionListener printAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DevHelper dev = new DevHelper();
+				dev.setConnectInfo(
+					dbDriverTf.getText(),
+					dbUrlTf.getText(),
+					dbUserTf.getText(),
+					dbPassTf.getText(),
+					dbTypeTf.getText()
+				);
+				String result = dev.printAllSql(dbTableNameTf.getText());
+				printSource.setText(result);
+			}
+		};
+		
+		excuteBtn.addActionListener(makeFileAction);
+		printBtn.addActionListener(printAction);
+		
+		setContentPane(mainPanel);
+		setSize(1400, 800);
+		setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		new DevToolGUI();
+	}
 }
