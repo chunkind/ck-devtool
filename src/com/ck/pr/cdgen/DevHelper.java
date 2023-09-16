@@ -8,7 +8,7 @@ import com.ck.pr.cdgen.connector.impl.MariaDbConnector;
 import com.ck.pr.cdgen.connector.impl.OracleDbConnector;
 import com.ck.pr.cdgen.model.FileMetaInfo;
 import com.ck.pr.cdgen.model.TargetTableInfo;
-import com.ck.pr.cdgen.temp.BasicTemplate;
+import com.ck.pr.cdgen.temp.impl.CltTemplate;
 import com.ck.pr.util.DevHelperUtil;
 
 public class DevHelper {
@@ -147,7 +147,7 @@ public class DevHelper {
 		String deleteSql = odb.createSqlDelete(list);
 		
 		String xmlContents = MessageFormat.format(
-			BasicTemplate.getBasicXmlContents(),
+				CltTemplate.getBasicXmlContents(),
 			modelClazzName, //0
 			resultType, //1
 			nameSpace, //2
@@ -158,7 +158,7 @@ public class DevHelper {
 			deleteSql //7
 		);
 		String xmlTemplate = MessageFormat.format(
-			BasicTemplate.getBasicXmlTemplate(),
+				CltTemplate.getBasicXmlTemplate(),
 			nameSpace,
 			xmlContents
 		);
@@ -180,13 +180,13 @@ public class DevHelper {
 		String constructors = odb.createJavaConstructor(list, modelClazzName);
 		
 		String dtoTemplate = MessageFormat.format(
-			BasicTemplate.getBasicModelTemplate(),
+				CltTemplate.getBasicModelTemplate(),
 			modelPack,
 			modelClazzName
 		);
 		
 		String dtoContents = MessageFormat.format(
-			BasicTemplate.getBasicModelContents(),
+				CltTemplate.getBasicModelContents(),
 			filed,
 			constructors
 		);
@@ -197,7 +197,7 @@ public class DevHelper {
 	}
 	
 	public void createSearchModelFile(FileMetaInfo info) {
-		if(null == info.getModelPath() || "".equals(info.getModelPath()))
+		if(null == info.getSearchModelPath() || "".equals(info.getSearchModelPath()))
 			return;
 		String searchModelPath = info.getSearchModelPath();
 		String dbTableName = info.getDbTableName();
@@ -210,13 +210,13 @@ public class DevHelper {
 		String constructors = odb.createJavaConstructor(list, searchModelClazzName);
 		
 		String dtoTemplate = MessageFormat.format(
-			BasicTemplate.getBasicSearchModelTemplate(),
+				CltTemplate.getBasicSearchModelTemplate(),
 			searchModelPack,
 			searchModelClazzName
 		);
 		
 		String dtoContents = MessageFormat.format(
-			BasicTemplate.getBasicModelContents(),
+				CltTemplate.getBasicModelContents(),
 			filed,
 			constructors
 		);
@@ -238,7 +238,7 @@ public class DevHelper {
 		String searchModelImportPath = info.getSearchModelImportPath();
 		
 		String mapperTemplate = MessageFormat.format(
-			BasicTemplate.getBasicMapperTemplate(),
+				CltTemplate.getBasicMapperTemplate(),
 			mapperPack,
 			modelImportPath,
 			searchModelImportPath,
@@ -246,7 +246,7 @@ public class DevHelper {
 		);
 		
 		String mapperContents = MessageFormat.format(
-			BasicTemplate.getBasicMapperContents(),
+				CltTemplate.getBasicMapperContents(),
 			modelClazzName,
 			searchModelClazzName,
 			DevHelperUtil.toCamelCase(searchModelClazzName)
@@ -269,14 +269,14 @@ public class DevHelper {
 		String searchModelImportPath = info.getSearchModelImportPath();
 		
 		String daoTemplate = MessageFormat.format(
-			BasicTemplate.getBasicDaoTemplate(),
+				CltTemplate.getBasicDaoTemplate(),
 			packageName,
 			modelImportPath,
 			searchModelImportPath,
 			daoClazzName
 		);
 		String daoContents = MessageFormat.format(
-			BasicTemplate.getBasicDaoContents(),
+				CltTemplate.getBasicDaoContents(),
 			modelClazzName,
 			searchModelClazzName,
 			DevHelperUtil.toCamelCase(searchModelClazzName)
@@ -304,7 +304,7 @@ public class DevHelper {
 		String modelImportPath = info.getModelImportPath();
 		
 		String daoImplTemplate = MessageFormat.format(
-			BasicTemplate.getDaoImplTemplate(),
+				CltTemplate.getDaoImplTemplate(),
 			daoImplPack,
 			searchModelImportPath,
 			modelImportPath,
@@ -314,7 +314,7 @@ public class DevHelper {
 		);
 		
 		String daoImplContents = MessageFormat.format(
-			BasicTemplate.getDaoImplContents(),
+				CltTemplate.getDaoImplContents(),
 			modelClazzName,
 			searchModelClazzName,
 			DevHelperUtil.toCamelCase(searchModelClazzName),
@@ -341,14 +341,14 @@ public class DevHelper {
 		String searchModelImportPath = info.getSearchModelImportPath();
 		
 		String serviceTemplate = MessageFormat.format(
-			BasicTemplate.getBasicServiceTemplate(),
+				CltTemplate.getBasicServiceTemplate(),
 			servicePack,
 			modelImportPath,
 			searchModelImportPath,
 			serviceClazzName
 		);
 		String serviceContents = MessageFormat.format(
-			BasicTemplate.getBasicServiceContents(),
+				CltTemplate.getBasicServiceContents(),
 			modelClazzName,
 			searchModelClazzName,
 			DevHelperUtil.toCamelCase(searchModelClazzName)
@@ -377,7 +377,7 @@ public class DevHelper {
 		String searchModelClazzName = info.getSearchModelClazzName();
 		
 		String serviceImplTemplate = MessageFormat.format(
-			BasicTemplate.getBasicServiceImplTemplate(),
+				CltTemplate.getBasicServiceImplTemplate(),
 			serviceImplPack,
 			modelImportPath,
 			serarchModelImportPath,
@@ -386,7 +386,7 @@ public class DevHelper {
 			serviceClazzName
 		);
 		String serviceImplContents = MessageFormat.format(
-			BasicTemplate.getBasicServiceImplContents(),
+				CltTemplate.getBasicServiceImplContents(),
 			modelClazzName,
 			searchModelClazzName,
 			DevHelperUtil.toCamelCase(searchModelClazzName),
@@ -419,7 +419,7 @@ public class DevHelper {
 		int lastIdx = packageNameList.length - 1;
 		
 		String contollerTemplate = MessageFormat.format(
-			BasicTemplate.getBasicControllerTemplate(),
+				CltTemplate.getBasicControllerTemplate(),
 			controllerPack,
 			serviceImportPath,
 			modelImportPath,
@@ -427,7 +427,7 @@ public class DevHelper {
 			controllerClazzName
 		);
 		String contollerContents = MessageFormat.format(
-			BasicTemplate.getBasicControllerContents(),
+				CltTemplate.getBasicControllerContents(),
 			modelClazzName,
 			searchModelClazzName,
 			DevHelperUtil.toCamelCase(searchModelClazzName),

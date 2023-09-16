@@ -23,6 +23,41 @@ public class DevToolGUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private static final int textFileSize = 45;
 	
+	//회사
+//	private static final String dbDriver=        "net.sf.log4jdbc.DriverSpy";
+//	private static final String dbUrl=           "jdbc:log4jdbc:oracle:thin:@10.154.3.160:1526:SKRECP1";
+//	private static final String dbUser=          "SHOPPINGUSER";
+//	private static final String dbPass=          "goddnsehd1109";
+//	private static final String dbType=          "oracle";
+//	private static final String dbTableName=     "HI_RM252M";
+//	private static final String workspacePath=   "C:/work/workspace";
+//	private static final String controllerPath=  "/05_BO/src/main/java/ehimart/webapp/bo/test/controller/TestController.java";
+//	private static final String servicePath=     "/02_Application/src/main/java/ehimart/app/domain/bo/test/service/TestService.java";
+//	private static final String serviceImplPath= "/02_Application/src/main/java/ehimart/app/domain/bo/test/service/TestServiceImpl.java";
+//	private static final String daoPath=         "/02_Application/src/main/java/ehimart/app/domain/bo/test/biz/TestBiz.java";
+//	private static final String daoImplPath=     "/02_Application/src/main/java/ehimart/app/domain/bo/test/biz/TestBizImpl.java";
+//	private static final String modelPath=       "/02_Application/src/main/java/ehimart/app/domain/bo/test/model/TestModel.java";
+//	private static final String searchModelPath= "/02_Application/src/main/java/ehimart/app/domain/bo/test/model/SearchTestModel.java";
+//	private static final String ormPath=         "/02_Application/src/main/resources/ehimart/app/domain/bo/test/mapper/testMapper.xml";
+//	private static final String nameSpace=       "testMapper";
+	//clt
+	private static final String dbDriver=        "net.sf.log4jdbc.sql.jdbcapi.DriverSpy";
+	private static final String dbUrl=           "jdbc:log4jdbc:mariadb://dudtlr2331.cafe24.com:3306/dudtlr2331?useUnicode=true&characterEncoding=UTF-8&characterSetClient=utf8mb4&characterSetConnection=utf8mb4&characterSetDatabase=utf8mb4&characterSetFilesystem=binary&characterSetResults=utf8mb4&characterSetServer=utf8mb4&characterSetSystem=utf8&collationConnection=utf8mb4_unicode_ci&collationDatabase=utf8mb4_unicode_ci&collationServer=utf8mb4_unicode_ci";
+	private static final String dbUser=          "dudtlr2331";
+	private static final String dbPass=          "victory123";
+	private static final String dbType=          "maria";
+	private static final String dbTableName=     "PROM_TBL";
+	private static final String workspacePath=   "C:/git";
+	private static final String controllerPath=  "/hangang_spring_mvc/src/main/java/com/clt/shp/test/TestController.java";
+	private static final String servicePath=     "";
+	private static final String serviceImplPath= "/hangang_spring_mvc/src/main/java/com/clt/shp/test/service/impl/TestServiceImpl.java";
+	private static final String daoPath=         "";
+	private static final String daoImplPath=     "/hangang_spring_mvc/src/main/java/com/clt/shp/test/dao/impl/TestDaoImpl.java";
+	private static final String modelPath=       "/hangang_spring_mvc/src/main/java/com/clt/shp/test/TestVO.java";
+	private static final String searchModelPath= "";
+	private static final String ormPath=         "/hangang_spring_mvc/src/main/resources/sqlmap/maria/test-mapping.xml";
+	private static final String nameSpace=       "testDao";
+	
 	public JPanel mainPanel = new JPanel();
 	public JPanel topPanel = new JPanel();
 	public JPanel midPanel = new JPanel();
@@ -74,22 +109,22 @@ public class DevToolGUI extends JFrame{
 	public JLabel searchModelPathLb = new JLabel("파라미터 모델 명 :");
 	public JLabel ormPathLb = new JLabel("mybatis xml 명 :");
 	
-	public JTextField workspacePathTf = new JTextField("C:/work/workspace", textFileSize);
-	public JTextField dbDriverTf = new JTextField("net.sf.log4jdbc.DriverSpy", textFileSize);
-	public JTextField dbUrlTf = new JTextField("jdbc:log4jdbc:oracle:thin:@10.154.3.160:1526:SKRECP1", textFileSize);
-	public JTextField dbUserTf = new JTextField("SHOPPINGUSER", textFileSize);
-	public JTextField dbPassTf = new JTextField("goddnsehd1109", textFileSize);
-	public JTextField dbTypeTf = new JTextField("oracle", textFileSize);
-	public JTextField dbTableNameTf = new JTextField("HI_RM252M", textFileSize);
-	public JTextField nameSpaceTf = new JTextField("testMapper", textFileSize);
-	public JTextField controllerPathTf = new JTextField("/05_BO/src/main/java/ehimart/webapp/bo/test/controller/TestController.java", textFileSize);
-	public JTextField servicePathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/service/TestService.java", textFileSize);
-	public JTextField serviceImplPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/service/TestServiceImpl.java", textFileSize);
-	public JTextField daoPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/biz/TestBiz.java", textFileSize);
-	public JTextField daoImplPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/biz/TestBizImpl.java", textFileSize);
-	public JTextField modelPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/model/TestModel.java", textFileSize);
-	public JTextField searchModelPathTf = new JTextField("/02_Application/src/main/java/ehimart/app/domain/bo/test/model/SearchTestModel.java", textFileSize);
-	public JTextField ormPathTf = new JTextField("/02_Application/src/main/resources/ehimart/app/domain/bo/test/mapper/testMapper.xml", textFileSize);
+	public JTextField dbDriverTf = new JTextField(dbDriver, textFileSize);
+	public JTextField dbUrlTf = new JTextField(dbUrl, textFileSize);
+	public JTextField dbUserTf = new JTextField(dbUser, textFileSize);
+	public JTextField dbPassTf = new JTextField(dbPass, textFileSize);
+	public JTextField dbTypeTf = new JTextField(dbType, textFileSize);
+	public JTextField dbTableNameTf = new JTextField(dbTableName, textFileSize);
+	public JTextField workspacePathTf = new JTextField(workspacePath, textFileSize);
+	public JTextField controllerPathTf = new JTextField(controllerPath, textFileSize);
+	public JTextField servicePathTf = new JTextField(servicePath, textFileSize);
+	public JTextField serviceImplPathTf = new JTextField(serviceImplPath, textFileSize);
+	public JTextField daoPathTf = new JTextField(daoPath, textFileSize);
+	public JTextField daoImplPathTf = new JTextField(daoImplPath, textFileSize);
+	public JTextField modelPathTf = new JTextField(modelPath, textFileSize);
+	public JTextField searchModelPathTf = new JTextField(searchModelPath, textFileSize);
+	public JTextField ormPathTf = new JTextField(ormPath, textFileSize);
+	public JTextField nameSpaceTf = new JTextField(nameSpace, textFileSize);
 	
 	public JTextArea printSource = new JTextArea("디비정보만 입력해도 프린트 할 수 있습니다.", 43, 50);
 
