@@ -1,6 +1,8 @@
 package com.ck.pr.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -127,14 +129,21 @@ public class DevToolGUI extends JFrame{
 	public JTextField nameSpaceTf = new JTextField(nameSpace, textFileSize);
 	
 	public JTextArea printSource = new JTextArea("디비정보만 입력해도 프린트 할 수 있습니다.", 43, 50);
+	
+	//스크롤 
+	public JScrollPane scrollPane = new JScrollPane(printSource);
+	
+	public JButton topBtnPrint = new JButton("쿼리출력");
+	public JButton topBtnFile = new JButton("파일생성");
+	public JButton topBtnHttp = new JButton("Http통신");
+	
+	public JButton excuteBtn = new JButton("파일 생성");
+	public JButton printBtn = new JButton("소스 프린트");
 
 	public DevToolGUI(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("개발 도구");
 //		setLayout(new FlowLayout(FlowLayout.CENTER, 20, 5));
-		
-		//스크롤 
-		JScrollPane scrollPane = new JScrollPane(printSource);
 		
 		//패널 배경색 설정(테스트용)
 //		topLeftPanel.setBackground(Color.cyan);
@@ -149,7 +158,7 @@ public class DevToolGUI extends JFrame{
 		
 		//레이아웃 설정
 //		topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.Y_AXIS));
-//		topCntrPanel.setLayout(new BoxLayout(topCntrPanel, BoxLayout.Y_AXIS));
+		topCntrPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 //		topRghtPanel.setLayout(new BoxLayout(topRghtPanel, BoxLayout.Y_AXIS));
 //		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
 		midCntrPanel.setLayout(new BoxLayout(midCntrPanel, BoxLayout.Y_AXIS));
@@ -165,9 +174,9 @@ public class DevToolGUI extends JFrame{
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		
 		//패널 설정
-		topPanel.add(topLeftPanel);
+//		topPanel.add(topLeftPanel);
 		topPanel.add(topCntrPanel);
-		topPanel.add(topRghtPanel);
+//		topPanel.add(topRghtPanel);
 		
 		midPanel.add(midLeftPanel);
 		midPanel.add(midCntrPanel);
@@ -181,14 +190,73 @@ public class DevToolGUI extends JFrame{
 		mainPanel.add(midPanel);
 		mainPanel.add(btmPanel);
 		
+		//버튼 생성
+		topCntrPanel.add(topBtnPrint);
+		topCntrPanel.add(topBtnFile);
+		topCntrPanel.add(topBtnHttp);
+		
+		addEventListener();
+		
+		setContentPane(mainPanel);
+		setSize(1400, 800);
+		setVisible(true);
+	}
+	
+	public void httpScene() {
+		clearScene();
+		
+		JPanel workspacePathPl = new JPanel();
+	}
+	
+	public void printScene() {
+		clearScene();
 		//컴포넌트 에드
-		workspacePathPl.add(workspacePathLb);workspacePathPl.add(workspacePathTf);
 		dbDriverPl.add(dbDriverLb);dbDriverPl.add(dbDriverTf);
 		dbUrlPl.add(dbUrlLb);dbUrlPl.add(dbUrlTf);
 		dbUserPl.add(dbUserLb);dbUserPl.add(dbUserTf);
 		dbPassPl.add(dbPassLb);dbPassPl.add(dbPassTf);
 		dbTypePl.add(dbTypeLb);dbTypePl.add(dbTypeTf);
 		dbTableNamePl.add(dbTableNameLb);dbTableNamePl.add(dbTableNameTf);
+		
+		//중단
+		midCntrPanel.add(new Label("* DB Info"));
+		midCntrPanel.add(dbDriverPl);
+		midCntrPanel.add(dbUrlPl);
+		midCntrPanel.add(dbUserPl);
+		midCntrPanel.add(dbPassPl);
+		midCntrPanel.add(dbTypePl);
+		midCntrPanel.add(dbTableNamePl);
+		
+		midRghtPanel.add(scrollPane);
+		
+		//버튼 생성
+		topCntrPanel.add(topBtnPrint);
+		topCntrPanel.add(topBtnFile);
+		topCntrPanel.add(topBtnHttp);
+		btmCntrPanel.add(printBtn);
+		
+		//패널 설정
+		topPanel.add(topCntrPanel);
+		
+		midPanel.add(midLeftPanel);
+		midPanel.add(midCntrPanel);
+		midPanel.add(midRghtPanel);
+		
+		btmPanel.add(btmLeftPanel);
+		btmPanel.add(btmCntrPanel);
+		btmPanel.add(btmRghtPanel);
+		
+		mainPanel.add(topPanel);
+		mainPanel.add(midPanel);
+		mainPanel.add(btmPanel);
+		
+		setContentPane(mainPanel);
+	}
+	
+	public void fileScene() {
+		clearScene();
+		//컴포넌트 에드
+		workspacePathPl.add(workspacePathLb);workspacePathPl.add(workspacePathTf);
 		nameSpacePl.add(nameSpaceLb);nameSpacePl.add(nameSpaceTf);
 		controllerPathPl.add(controllerPathLb);controllerPathPl.add(controllerPathTf);
 		servicePathPl.add(servicePathLb);servicePathPl.add(servicePathTf);
@@ -198,14 +266,6 @@ public class DevToolGUI extends JFrame{
 		modelPathPl.add(modelPathLb);modelPathPl.add(modelPathTf);
 		searchModelPathPl.add(searchModelPathLb);searchModelPathPl.add(searchModelPathTf);
 		ormPathPl.add(ormPathLb);ormPathPl.add(ormPathTf);
-		
-		midCntrPanel.add(new Label("* DB Info"));
-		midCntrPanel.add(dbDriverPl);
-		midCntrPanel.add(dbUrlPl);
-		midCntrPanel.add(dbUserPl);
-		midCntrPanel.add(dbPassPl);
-		midCntrPanel.add(dbTypePl);
-		midCntrPanel.add(dbTableNamePl);
 		
 		midCntrPanel.add(new Label("* File Info"));
 		midCntrPanel.add(workspacePathPl);
@@ -219,15 +279,67 @@ public class DevToolGUI extends JFrame{
 		midCntrPanel.add(ormPathPl);
 		midCntrPanel.add(nameSpacePl);
 		
-		midRghtPanel.add(scrollPane);
-		
 		//버튼 생성
-		JButton excuteBtn = new JButton("파일 생성");
-		JButton printBtn = new JButton("소스 프린트");
+		topCntrPanel.add(topBtnPrint);
+		topCntrPanel.add(topBtnFile);
+		topCntrPanel.add(topBtnHttp);
 		btmCntrPanel.add(excuteBtn);
-		btmCntrPanel.add(printBtn);
 		
-		//이벤트 리스터
+		//패널 설정
+		topPanel.add(topCntrPanel);
+		
+		midPanel.add(midLeftPanel);
+		midPanel.add(midCntrPanel);
+		midPanel.add(midRghtPanel);
+		
+		btmPanel.add(btmLeftPanel);
+		btmPanel.add(btmCntrPanel);
+		btmPanel.add(btmRghtPanel);
+		
+		mainPanel.add(topPanel);
+		mainPanel.add(midPanel);
+		mainPanel.add(btmPanel);
+		
+		setContentPane(mainPanel);
+	}
+	
+	public void clearScene() {
+		midLeftPanel.removeAll();
+		midCntrPanel.removeAll();
+		midRghtPanel.removeAll();
+		
+		btmLeftPanel.removeAll();
+		btmCntrPanel.removeAll();
+		btmRghtPanel.removeAll();
+		
+		topPanel.removeAll();
+		midPanel.removeAll();
+		btmPanel.removeAll();
+		
+		mainPanel.removeAll();
+	}
+	
+	public void addEventListener() {
+		ActionListener topBtnPrintAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				printScene();
+			}
+		};
+		
+		ActionListener topBtnFileAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileScene();
+			}
+		};
+		ActionListener topBtnHttpAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				httpScene();
+			}
+		};
+		
 		ActionListener makeFileAction = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -274,12 +386,17 @@ public class DevToolGUI extends JFrame{
 			}
 		};
 		
+		topBtnPrint.removeActionListener(topBtnPrintAction);
+		topBtnFile.removeActionListener(topBtnFileAction);
+		topBtnHttp.removeActionListener(topBtnHttpAction);
+		excuteBtn.removeActionListener(makeFileAction);
+		printBtn.removeActionListener(printAction);
+		
+		topBtnPrint.addActionListener(topBtnPrintAction);
+		topBtnFile.addActionListener(topBtnFileAction);
+		topBtnHttp.addActionListener(topBtnHttpAction);
 		excuteBtn.addActionListener(makeFileAction);
 		printBtn.addActionListener(printAction);
-		
-		setContentPane(mainPanel);
-		setSize(1400, 800);
-		setVisible(true);
 	}
 	
 	public static void main(String[] args) {
